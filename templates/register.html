@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="bg-black text-green-300 p-4 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-center mb-4">Register</h2>
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div class="mb-4">
+                <label for="username" class="text-lg">Username:</label>
+                <input type="text" name="username" id="username" class="w-full p-2 bg-gray-800 text-gray-100 rounded-md" required>
+                {% if form.username.errors %}
+                    <p class="text-red-500">{{ form.username.errors[0] }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="password" class="text-lg">Password:</label>
+                <input type="password" name="password" id="password" class="w-full p-2 bg-gray-800 text-gray-100 rounded-md" required>
+                {% if form.password.errors %}
+                    <p class="text-red-500">{{ form.password.errors[0] }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="confirm" class="text-lg">Confirm Password:</label>
+                <input type="password" name="confirm" id="confirm" class="w-full p-2 bg-gray-800 text-gray-100 rounded-md" required>
+                {% if form.confirm.errors %}
+                    <p class="text-red-500">{{ form.confirm.errors[0] }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Register</button>
+        </form>
+    </div>
+{% endblock %}
