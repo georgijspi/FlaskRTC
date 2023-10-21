@@ -1,27 +1,14 @@
-from flask import Flask, flash, render_template, request, redirect, url_for
-from flask_socketio import SocketIO
-from flask_wtf import CSRFProtect
-from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
-from models import User, Session
-from forms import RegistrationForm
+#
+#   CURRENTLY NOT IN USE
+#
+
+
+from flask import flash, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_socketio import SocketIO, emit
-# from models import User
-# from routes import 
-# import routes
-
-app = Flask(__name__)
-csrf = CSRFProtect(app)
-bcrypt = Bcrypt(app)
-
-
-app.config['SECRET_KEY'] = 'your_secret_key'
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
-
-socketio = SocketIO(app)
+from app import app, socketio, login_manager, bcrypt
+from models import User, Session
+from forms import RegistrationForm
 
 
 @login_manager.user_loader
@@ -81,7 +68,3 @@ def handle_message(data):
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-if __name__ == '__main__':
-    socketio.run(app, debug=True)

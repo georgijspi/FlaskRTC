@@ -1,10 +1,23 @@
-# from sqlalchemy import Column, Integer, String
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from flask_login import UserMixin
 
-# Base = declarative_base()
+engine = create_engine('sqlite:///my_chat_app.db')
+Base = declarative_base()
 
-# class User(Base):
-#     __tablename__ = 'users'
-#     id = Column(Integer, primary_key=True)
-#     username = Column(String(100), unique=True)
-#     password = Column(String(255))
+# SQLAlchemy Configuration
+Base = declarative_base()
+class User(Base, UserMixin):  # Add UserMixin to your User class
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(100), unique=True)
+    password = Column(String(255))
+
+    def is_active(self):
+        return True  # Change this logic based on your application's requirements
+
+    # Other User class methods (if any)
+
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
