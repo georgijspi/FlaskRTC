@@ -58,6 +58,10 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    # Forget anu user_id
+    session.clear()
+    
     form = RegistrationForm(request.form)  # Create an instance of the RegistrationForm
     if request.method == 'POST':
         username = request.form.get('username')
