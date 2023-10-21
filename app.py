@@ -12,8 +12,8 @@ from flask_socketio import SocketIO, emit
 # import routes
 
 app = Flask(__name__)
-csrf = CSRFProtect(app)
-bcrypt = Bcrypt(app)
+csrf = CSRFProtect(app)  # CSRF token
+bcrypt = Bcrypt(app) # password encryption
 
 
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -22,7 +22,6 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 socketio = SocketIO(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -71,6 +70,7 @@ def login():
                     return redirect(url_for('index'))
     return render_template('login.html', form=form)  # Pass the form to the template context
 
+# Placeholder, not used for now
 @socketio.on('message')
 @login_required
 def handle_message(data):
