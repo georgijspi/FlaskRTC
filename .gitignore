@@ -1,1 +1,3 @@
-venv/
+myvenv/
+my_chat_app.db/
+static/uploads/

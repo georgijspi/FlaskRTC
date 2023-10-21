@@ -3,7 +3,7 @@
 {% block content %}
     <div class="bg-black text-green-300 p-4 rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold text-center mb-4">Register</h2>
-        <form method="post">
+        <form method="post" action="{{ url_for('register') }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="mb-4">
                 <label for="username" class="text-lg">Username:</label>
@@ -25,6 +25,10 @@
                 {% if form.confirm.errors %}
                     <p class="text-red-500">{{ form.confirm.errors[0] }}</p>
                 {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="profile_picture" class="text-lg">Profile Picture (optional):</label>
+                <input type="file" name="profile_picture" id="profile_picture" accept="image/*"> {# File input for profile picture #}
             </div>
             <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Register</button>
         </form>
