@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>{{ chat_room.name }}</h2>
+    <div id="message-list">
+        {% for message in messages %}
+            <p>{{ message.sender.username }}: {{ message.content }}</p>
+        {% endfor %}
+    </div>
+    <form method="post" hx-post="{{ url_for('chat_room', room_id=chat_room.id) }}">
+        {{ form.hidden_tag() }}
+        {{ form.content.label }}
+        {{ form.content }}
+        {{ form.submit }}
+    </form>
+{% endblock %}

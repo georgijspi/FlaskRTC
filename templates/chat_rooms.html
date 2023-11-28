@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Chat Rooms</h2>
+    <form method="post">
+        <div class="form-group">
+            <input type="text" name="room_name" placeholder="Create a new chat room">
+            <button type="submit">Create</button>
+        </div>
+    </form>
+    <ul>
+        {% for chat_room in chat_rooms %}
+            <li>
+                <a href="{{ url_for('chat_room', room_id=chat_room.id) }}">{{ chat_room.name }}</a>
+                {% if current_user not in chat_room.users %}
+                    <button hx-post="{{ url_for('join_chat_room', room_id=chat_room.id) }}">Join</button>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {{ form.hidden_tag() }}
+{% endblock %}

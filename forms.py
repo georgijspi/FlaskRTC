@@ -1,17 +1,14 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, validators, TextAreaField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms.validators import DataRequired, Length
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
-    ])
-    confirm = PasswordField('Repeat Password')
-    profile_picture = FileField('Profile Picture')
+    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit = SubmitField('Register')
 
-class SendMessageForm(FlaskForm):
-    content = TextAreaField('Message', validators=[DataRequired()])
-    submit = SubmitField('Send')
+class ChatRoomForm(FlaskForm):
+    room_name = StringField('Room Name', validators=[DataRequired()])
+    visibility = SelectField('Visibility', choices=[('public', 'Public'), ('private', 'Private')], validators=[DataRequired()])
+    submit = SubmitField('Create Chat Room')
