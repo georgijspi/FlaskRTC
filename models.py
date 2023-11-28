@@ -1,16 +1,22 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+# models.py
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from flask_login import UserMixin
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
-db = SQLAlchemy(app)
+engine = create_engine('sqlite:///my_chat_app.db')
+Base = declarative_base()
 
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True, nullable=False)
+class User(Base, UserMixin):  # Add UserMixin to your User class
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(100), unique=True)
+    password = Column(String(255))
 
-    # Define the many-to-many relationship with ChatRoom
-# It's essential to create the database before running your application
-with app.app_context():
-    db.create_all()
+    def is_active(self):
+        return True
+
+# Other User class methods (if any)
+
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
